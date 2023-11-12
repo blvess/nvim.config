@@ -1,0 +1,18 @@
+local opt = vim.opt
+
+opt.clipboard = "unnamedplus"
+opt.number = true
+opt.shiftwidth = 2
+opt.tabstop = 2
+opt.softtabstop = 2
+opt.expandtab = true
+opt.wrap = false
+opt.swapfile = false
+opt.undofile = true
+opt.ignorecase = true
+opt.smartindent = true
+opt.termguicolors = true
+opt.cursorline = true
+opt.signcolumn = "yes"
+opt.splitbelow = true
+opt.splitright = true
