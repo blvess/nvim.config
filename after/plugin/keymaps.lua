@@ -10,3 +10,6 @@ map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Lazy
 map("n", "<leader><leader>", "<cmd>Lazy sync<cr>", { silent = true, desc = "Lazy Sync" })
+
+-- Toggle
+map("n", "<leader>ww", "<cmd>set wrap!<cr>", { silent = true, desc = "Toggle Wrap" })

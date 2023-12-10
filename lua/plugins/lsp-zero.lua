@@ -18,32 +18,38 @@ return {
 		{ "folke/neodev.nvim", opts = {} },
 	},
 	config = function()
-		local lsp = require("lsp-zero").preset({})
+		local lsp_zero = require("lsp-zero")
 		local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+
 		local cmp = require("cmp")
-		local cmp_action = require("lsp-zero").cmp_action()
+		local cmp_action = lsp_zero.cmp_action()
+		local cmp_format = lsp_zero.cmp_format()
 
 		require("luasnip.loaders.from_vscode").lazy_load()
 
-		lsp.on_attach(function(_, bufnr)
-			lsp.default_keymaps({ buffer = bufnr })
+		lsp_zero.on_attach(function(client, bufnr)
+			lsp_zero.default_keymaps({ buffer = bufnr })
 		end)
 
-		lsp.set_sign_icons({
+		lsp_zero.set_sign_icons({
 			error = "✘",
 			warn = "▲",
 			hint = "⚑",
 			info = "»",
 		})
 
-		lsp.extend_cmp()
-
 		require("nvim-autopairs").setup({})
 		require("mason").setup({})
 		require("mason-lspconfig").setup({
 			ensure_installed = { "tsserver", "rust_analyzer" },
 			handlers = {
-				lsp.default_setup,
+				lsp_zero.default_setup,
+
+				lua_ls = function()
+					local lua_opts = lsp_zero.nvim_lua_ls()
+					require("lspconfig").lua_ls.setup(lua_opts)
+				end,
+
 				rust_analyzer = function()
 					local rust_tools = require("rust-tools")
 					rust_tools.setup({
@@ -74,15 +80,15 @@ return {
 		cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
 		cmp.setup({
-			mapping = {
-				["<Tab>"] = cmp_action.luasnip_supertab(),
-				["<S-Tab>"] = cmp_action.luasnip_shift_supertab(),
-				["<CR>"] = cmp.mapping.confirm({ select = true }),
-			},
 			window = {
 				completion = cmp.config.window.bordered(),
 				documentation = cmp.config.window.bordered(),
 			},
+			mapping = cmp.mapping.preset.insert({
+				["<Tab>"] = cmp_action.luasnip_supertab(),
+				["<S-Tab>"] = cmp_action.luasnip_shift_supertab(),
+				["<CR>"] = cmp.mapping.confirm({ select = true }),
+			}),
 			sources = {
 				{ name = "nvim_lsp" },
 				{ name = "nvim_lua" },
@@ -90,14 +96,7 @@ return {
 				{ name = "buffer" },
 				{ name = "path" },
 			},
-			formatting = {
-				fields = { "abbr", "kind", "menu" },
-				format = require("lspkind").cmp_format({
-					mode = "symbol",
-					maxwidth = 50,
-					ellipsis_char = "...",
-				}),
-			},
+			formatting = cmp_format,
 		})
 	end,
 }
