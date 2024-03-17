@@ -12,25 +12,14 @@ return {
 			},
 		},
 	},
-	keys = {
-		{
-			"<leader>du",
-			function()
-				require("dapui").toggle()
-			end,
-			silent = true,
-		},
-	},
-
 	lazy = false,
-
-	-- keys = {
-	-- 	{ "n", "<F5>", "<cmd>DapContinue<CR>" },
-	-- 	{ "n", "<F9>", "<cmd>DapToggleBreakpoint<CR>" },
-	-- 	{ "n", "<F10>", "<cmd>DapStepOver<CR>" },
-	-- 	{ "n", "<F11>", "<cmd>DapStepInto<CR>" },
-	-- 	{ "n", "<F12>", "<cmd>DapSetpOut<CR>" },
-	-- },
+	keys = {
+		{ "<F5>", "<cmd>DapContinue<CR>" },
+		{ "<F9>", "<cmd>DapToggleBreakpoint<CR>" },
+		{ "<F10>", "<cmd>DapStepOver<CR>" },
+		{ "<F11>", "<cmd>DapStepInto<CR>" },
+		{ "<F12>", "<cmd>DapSetpOut<CR>" },
+	},
 
 	config = function()
 		local dapui = require("dapui")
@@ -55,10 +44,10 @@ return {
 		vim.fn.sign_define("DapBreakpoint", { text = "🐞", texthl = "", linehl = "", numhl = "" })
 		vim.fn.sign_define("DapStopped", { text = "▶️", texthl = "", linehl = "", numhl = "" })
 
-		vim.keymap.set("n", "<F5>", dap.continue)
-		vim.keymap.set("n", "<F9>", dap.toggle_breakpoint)
-		vim.keymap.set("n", "<F10>", dap.step_over)
-		vim.keymap.set("n", "<F11>", dap.step_into)
-		vim.keymap.set("n", "<F12>", dap.step_out)
+		-- vim.keymap.set("n", "<F5>", dap.continue)
+		-- vim.keymap.set("n", "<F9>", dap.toggle_breakpoint)
+		-- vim.keymap.set("n", "<F10>", dap.step_over)
+		-- vim.keymap.set("n", "<F11>", dap.step_into)
+		-- vim.keymap.set("n", "<F12>", dap.step_out)
 	end,
 }

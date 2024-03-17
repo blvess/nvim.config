@@ -19,6 +19,9 @@ return {
 				visible = false,
 				hide_dotfilees = true,
 				hide_hidden = true,
+				hide_by_name = {
+					"node_modules",
+				},
 				always_show = {
 					".gitignore",
 					".luarc.json",
@@ -27,6 +30,14 @@ return {
 			bind_to_cwd = false,
 			follow_current_file = { enabled = true },
 			use_libuv_file_watcher = true,
+		},
+		event_handlers = {
+			{
+				event = "file_opened",
+				handler = function()
+					require("neo-tree.command").execute({ action = "close" })
+				end,
+			},
 		},
 	},
 }

@@ -2,15 +2,17 @@ return {
 	"nvim-telescope/telescope.nvim",
 
 	keys = {
-		{ "<leader>f", "<cmd>Telescope find_files<cr>", desc = "Telescope Find Files" },
+		{ "<C-p>", "<cmd>Telescope find_files<cr>", desc = "Telescope Find Files" },
 		{ "<leader>b", "<cmd>Telescope buffers<cr>", desc = "Telescope Find Buffers" },
 		{ "<leader>s", "<cmd>Telescope live_grep<cr>", desc = "Telescope Live Grep" },
-		{ "<leader>d", "<cmd>Telescope diagnostics<cr>", desc = "Telescope Live Grep" },
+		{ "<leader>d", "<cmd>Telescope diagnostics<cr>", desc = "Telescope diagnostics" },
+		{ "<leader>k", "<cmd>Telescope keymaps<cr>", desc = "Telescope Keymaps" },
 	},
 
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+		"nvim-telescope/telescope-dap.nvim",
 	},
 
 	lazy = false,
@@ -32,5 +34,6 @@ return {
 
 		telescope.setup({})
 		telescope.load_extension("fzf")
+		telescope.load_extension("dap")
 	end,
 }

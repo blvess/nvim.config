@@ -2,18 +2,22 @@ return {
 	"jay-babu/mason-null-ls.nvim",
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
-    "nvimtools/none-ls.nvim",
+		"nvimtools/none-ls.nvim",
 		"nvim-lua/plenary.nvim",
 	},
 	config = function()
 		require("mason-null-ls").setup({
-			ensure_installed = { "stylua", "black", "prettierd", "eslint", "rustfmt" },
+			ensure_installed = { "stylua", "black", "prettier", "eslint", "goimport" },
 			handlers = {},
 		})
 
 		local null_ls = require("null-ls")
+		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 		null_ls.setup({
+			sources = {
+				-- null_ls.builtins.formatting.rustfmt,
+			},
 			on_attach = function(client, bufnr)
 				if client.supports_method("textDocument/formatting") then
 					vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })

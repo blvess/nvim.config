@@ -9,3 +9,7 @@ A scratch made config using lsp-zero to initalize the lsp server.
     { "<leader>b", "<cmd>Telescope buffers<cr>", desc = "Telescope Find Buffers" },
     { "<leader>s", "<cmd>Telescope live_grep<cr>", desc = "Telescope Live Grep" },
     { "t", "<esc>", [[<C-\><C-n>]], desc = "ToggleTerm" },
+
+### Fix for errors
+
+if getting a lua treesitter error in telescope run :TSInstall! lua
