@@ -5,5 +5,6 @@ return {
 		"sindrets/diffview.nvim",
 		"nvim-telescope/telescope.nvim",
 	},
+	branch = "nightly",
 	config = true,
 }

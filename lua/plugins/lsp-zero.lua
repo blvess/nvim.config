@@ -1,6 +1,6 @@
 return {
 	"VonHeikemen/lsp-zero.nvim",
-	branch = "dev-v3",
+	branch = "v3.x",
 	dependencies = {
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
@@ -16,20 +16,6 @@ return {
 		"onsails/lspkind.nvim",
 		"folke/neoconf.nvim",
 		"windwp/nvim-autopairs",
-		-- "simrat39/rust-tools.nvim",
-		{
-			"ray-x/go.nvim",
-			dependencies = { -- optional packages
-				"ray-x/guihua.lua",
-				"neovim/nvim-lspconfig",
-				"nvim-treesitter/nvim-treesitter",
-			},
-			ft = { "go", "gomod" },
-			config = function()
-				require("go").setup()
-			end,
-			build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
-		},
 	},
 	config = function()
 		require("neoconf").setup()
@@ -53,7 +39,7 @@ return {
 			end, opts)
 
 			vim.keymap.set("n", "<leader>i", function()
-				vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled())
+				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 			end, opts)
 		end)
 
@@ -71,7 +57,6 @@ return {
 		require("nvim-autopairs").setup({})
 		require("mason").setup({})
 		require("mason-lspconfig").setup({
-			-- ensure_installed = { "tsserver", "rust_analyzer", "lua_ls" },
 			ensure_installed = { "tsserver", "lua_ls" },
 			handlers = {
 				lsp_zero.default_setup,
@@ -81,30 +66,16 @@ return {
 					require("lspconfig").lua_ls.setup(lua_opts)
 				end,
 				rust_analyzer = lsp_zero.noop,
-				-- rust_analyzer = function()
-				-- 	local rust_tools = require("rust-tools")
-				-- 	rust_tools.setup({
-				-- 		tools = {
-				-- 			executor = require("rust-tools.executors").toggleterm,
-				-- 		},
-				-- 		server = {
-				-- 			on_attach = function(_, bufnr)
-				-- 				vim.keymap.set("n", "K", rust_tools.hover_actions.hover_actions, { buffer = bufnr })
-				-- 			end,
-				-- 			settings = {
-				-- 				["rust-analyzer"] = {
-				-- 					check = {
-				-- 						command = "clippy",
-				-- 						features = "all",
-				-- 					},
-				-- 					cargo = {
-				-- 						features = "all",
-				-- 					},
-				-- 				},
-				-- 			},
-				-- 		},
-				-- 	})
-				-- end,
+			},
+		})
+
+		lsp_zero.format_on_save({
+			format_opts = {
+				async = false,
+				timeout_ms = 10000,
+			},
+			servers = {
+				["rust-analyzer"] = { "rust" },
 			},
 		})
 
@@ -147,18 +118,6 @@ return {
 						pcall(require("copilot.suggestion").accept)
 					end,
 				},
-				-- ["<C-.>"] = cmp.mapping(function()
-				-- 	local copilot = require("copilot")
-				-- 	if copilot.is_visible() then
-				-- 		copilot.next()
-				-- 	end
-				-- end),
-				-- ["<C-,>"] = cmp.mapping(function()
-				-- 	local copilot = require("copilot")
-				-- 	if copilot.is_visible() then
-				-- 		copilot.prev()
-				-- 	end
-				-- end),
 				["<S-Tab>"] = cmp_action.luasnip_shift_supertab(),
 				["<CR>"] = cmp.mapping.confirm({ select = true }),
 				["<C-Space>"] = cmp.mapping.complete(),
@@ -172,6 +131,7 @@ return {
 				{ name = "nvim_lua" },
 				{ name = "buffer" },
 				{ name = "path" },
+				{ name = "crates" },
 			},
 		})
 	end,

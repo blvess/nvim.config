@@ -1,10 +1,6 @@
 local map = vim.keymap.set
 
 -- Navigation
-map("n", "<C-j>", "<C-w>j", { silent = true })
-map("n", "<C-h>", "<C-w>h", { silent = true })
-map("n", "<C-k>", "<C-w>k", { silent = true })
-map("n", "<C-l>", "<C-w>l", { silent = true })
 map("t", "<C-h>", "<cmd>wincmd h<CR>", { silent = true, desc = "Move Left" })
 map("t", "<C-j>", "<cmd>wincmd j<CR>", { silent = true, desc = "Move Down" })
 map("t", "<C-k>", "<cmd>wincmd k<CR>", { silent = true, desc = "Move Up" })

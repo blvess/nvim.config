@@ -2,6 +2,10 @@ return {
 	"zbirenbaum/copilot.lua",
 	cmd = "Copilot",
 	event = "InsertEnter",
+	keys = {
+		{ "<leader>p", "<cmd>Copilot suggestion toggle_auto_trigger<cr>", desc = "Copilot Toggle" },
+	},
+
 	config = function()
 		require("copilot").setup({
 			panel = {
@@ -21,7 +25,7 @@ return {
 			},
 			suggestion = {
 				enabled = true,
-				auto_trigger = true,
+				auto_trigger = false,
 				debounce = 75,
 				keymap = {
 					accept = "<C-e>",

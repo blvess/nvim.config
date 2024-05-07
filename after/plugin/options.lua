@@ -18,3 +18,6 @@ opt.signcolumn = "yes"
 opt.splitbelow = true
 opt.splitright = true
 opt.listchars = { eol = "↲", tab = "▸ ", trail = "·" }
+opt.autoread = true
+opt.updatetime = 300
+opt.conceallevel = 1
